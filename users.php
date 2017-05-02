@@ -37,7 +37,6 @@ $Database = Database::get_Instance();
                         {
                             /* Cryptage des mots de passe */
                             $password = hash("whirlpool", $password);
-                            $confirm_password = hash("whirlpool", $confirm_password);
 
                             /* On verifie si l'adresse mail existe deja dans la BDD */
                             $fields = ['email' => $email];
@@ -51,8 +50,8 @@ $Database = Database::get_Instance();
                                 $date = date("Y-m-d");
 
                                 /* Insertion de l'utilisateur dans la BDD */
-                                $Database->request("INSERT INTO users(email, username, password, confirm_password, creation_date, confirm_date, token, mode)
-                                            VALUES('$email', '$username', '$password', '$confirm_password', '$date', NULL, '$cle', '0')");
+                                $Database->request("INSERT INTO users(email, username, password, creation_date, confirm_date, token, mode)
+                                            VALUES('$email', '$username', '$password', '$date', NULL, '$cle', '0')");
 
                                 /* On cherche l'id de cet utilisateur */
                                 $id = $Database->request("SELECT ID FROM users WHERE Email = :email", $fields);
@@ -60,7 +59,7 @@ $Database = Database::get_Instance();
 								$to    =  $email;
                                              $subject = 'Account activation - Camagru';
                                              $header  = "MIME-Version: 1.0\r\n";
-                                             $header .= 'From:"TwelveForStudy"<support@twelveforstudy.com>'."\n";
+                                             $header .= 'From:"Camagru"<support@twelveforstudy.com>'."\n";
                                              $header .= 'Content-Type:text/html; charset="UTF-8"'."\n";
                                              $header .= 'Content-Transfer-Encoding: 8bit';
                                              $message = '

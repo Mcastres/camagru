@@ -56,7 +56,7 @@ if (isset($_POST['recup_submit'], $_POST['recup_mail']))
                  /* Envoie du mail */
                  $subject = 'Forgot your password ? - Camagru';
                  $header  = "MIME-Version: 1.0\r\n";
-                 $header .= 'From:"TwelveForStudy"<support@twelveforstudy.com>'."\n";
+                 $header .= 'From:"Camagru"<support@twelveforstudy.com>'."\n";
                  $header .= 'Content-Type:text/html; charset="UTF-8"'."\n";
                  $header .= 'Content-Transfer-Encoding: 8bit';
                  $message = '
