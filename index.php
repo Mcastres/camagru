@@ -38,7 +38,7 @@ $start = ($currentPage - 1) * $perPage;
 	</head>
 	<body>
 		<?php if ($_SESSION['auth']): ?>
-			<a href="profile.php?user=<?php echo $_SESSION['auth']['username']; ?>">Mon profil</a>
+			<a href="profile.php">Mon profil</a>
 			<a href="logout.php">Se deconnecter</a>
 		<?php else: ?>
 			<a href="signin.php">Se connecter</a>

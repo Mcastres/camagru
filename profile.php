@@ -12,8 +12,11 @@ include_once('Class/class.bdd.php');
 $Database = Database::get_Instance();
 
 if (!$_SESSION['auth'])
-	header('location: index.php?page=1');
+	header('location: signin.php');
 
+	var_dump($_POST);
+if (isset($_POST['data']))
+	echo "string";
 
 ?>
 <!DOCTYPE html>
@@ -21,44 +24,21 @@ if (!$_SESSION['auth'])
 	<head>
 		<meta charset="utf-8">
 		<title>Camagru - <?php echo $_SESSION['auth']['username']; ?></title>
-		<script type="text/javascript" src="webcam.js"></script>
-		<script type="text/javascript"><!--
-    document.write( webcam.get_html(320, 240) );
-// --></script>
-		<script type="text/javascript"><!--
-
-		    webcam.set_api_url( 'action.php' );
-		    webcam.set_quality( 100 ); // JPEG quality (1 - 100)
-		    webcam.set_shutter_sound( true ); // play shutter click sound
-		    webcam.set_hook( 'onComplete', 'my_completion_handler' );
-
-		    function take_snapshot() {
-		        $('#showresult').html('<h1>Uploading...</h1>');
-		        webcam.snap();
-		    }
-
-		    function configure(){
-		        webcam.configure();
-		    }
-
-		    function my_completion_handler(msg) {
-		        // msg will give you the url of the saved image using webcamClass
-		        $('#showresult').html("<img src='"+msg+"'> <br>"+msg+"");
-		        return false;
-		    }
-
-// --></script>
+		<script type="text/javascript">
+			var myImg = document.getElementById("photo").src;
+		</script>
 	</head>
 	<body>
 		<a href="index.php?page=1">Home</a>
+		<a href="upload.php">Upload</a>
 		<a href="logout.php">Se deconnecter</a>
-		<script type="text/javascript">
-    		document.write( webcam.get_html(320, 240) );
-		</script>
-		<form>
-			<input type="button" value="Configure..." onClick = "webcam.configure()">
-			<input type="button" value="Take Snapshot" onClick="take_snapshot()">
-		</form>
 
+		<video id="video"></video>
+		<button id="startbutton">Prendre une photo</button>
+		<canvas id="canvas"></canvas>
+		<img src="https://s-media-cache-ak0.pinimg.com/originals/08/b0/01/08b0010d557f4e4b87fe26205dac8911.png" id="photo" alt="photo">
+	<script src="js/webcam.js"></script>
+	<?php var_dump($_POST); ?>
 	</body>
+
 </html>

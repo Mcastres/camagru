@@ -1,19 +1,67 @@
-webcam.set_api_url( 'action.php' );
-webcam.set_quality( 100 ); // JPEG quality (1 - 100)
-webcam.set_shutter_sound( true ); // play shutter click sound
-webcam.set_hook( 'onComplete', 'my_completion_handler' );
+(function() {
 
-function take_snapshot() {
-    $('#showresult').html('<h1>Uploading...</h1>');
-    webcam.snap();
-}
+  var streaming = false,
+      video        = document.querySelector('#video'),
+      cover        = document.querySelector('#cover'),
+      canvas       = document.querySelector('#canvas'),
+      photo        = document.querySelector('#photo'),
+      startbutton  = document.querySelector('#startbutton'),
+      width = 320,
+      height = 0;
 
-function configure(){
-    webcam.configure();
-}
+  navigator.getMedia = ( navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia);
 
-function my_completion_handler(msg) {
-    // msg will give you the url of the saved image using webcamClass
-    $('#showresult').html("<img src='"+msg+"'> <br>"+msg+"");
-    return false;
-}
+  navigator.getMedia(
+    {
+      video: true,
+      audio: false
+    },
+    function(stream) {
+      if (navigator.mozGetUserMedia) {
+        video.mozSrcObject = stream;
+      } else {
+        var vendorURL = window.URL || window.webkitURL;
+        video.src = vendorURL.createObjectURL(stream);
+      }
+      video.play();
+    },
+    function(err) {
+      console.log("An error occured! " + err);
+    }
+  );
+
+  video.addEventListener('canplay', function(ev){
+    if (!streaming) {
+      height = video.videoHeight / (video.videoWidth/width);
+      video.setAttribute('width', width);
+      video.setAttribute('height', height);
+      canvas.setAttribute('width', width);
+      canvas.setAttribute('height', height);
+      streaming = true;
+    }
+  }, false);
+
+  function takepicture() {
+    canvas.width = width;
+    canvas.height = height;
+    canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+    var data = canvas.toDataURL('image/png');
+	var dati = "Hello";
+    photo.setAttribute('src', data);
+	var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.open("POST", "http://localhost:8080/camagru/profile.php", true);
+	xmlhttp.setRequestHeader("Content-type","application/json");
+	temp = JSON.stringify(data);
+    xmlhttp.send(temp);
+  }
+
+  startbutton.addEventListener('click', function(ev){
+      takepicture();
+    ev.preventDefault();
+  }, false);
+
+})();
