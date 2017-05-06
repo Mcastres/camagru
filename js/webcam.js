@@ -5,7 +5,7 @@
       cover        = document.querySelector('#cover'),
       canvas       = document.querySelector('#canvas'),
       photo        = document.querySelector('#photo'),
-      startbutton  = document.querySelector('#startbutton'),
+      startbutton  = document.querySelector('#startbutton');
       width = 320,
       height = 0;
 
@@ -14,7 +14,7 @@
                          navigator.mozGetUserMedia ||
                          navigator.msGetUserMedia);
 
-  navigator.getMedia(
+navigator.getMedia(
     {
       video: true,
       audio: false
@@ -45,18 +45,17 @@
   }, false);
 
   function takepicture() {
+	var radio = document.querySelector('input[name=elements]:checked').value;
     canvas.width = width;
     canvas.height = height;
     canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-    var data = canvas.toDataURL('image/png');
-	var dati = "Hello";
+    var data = canvas.toDataURL('image/jpeg');
+	var elements = radio;
     photo.setAttribute('src', data);
 	var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.open("POST", "http://localhost:8080/camagru/profile.php", true);
-	xmlhttp.setRequestHeader("Content-type","application/json");
-	temp = JSON.stringify(data);
-    xmlhttp.send(temp);
+    xmlhttp.open("POST", "http://localhost:8080/camagru/upload.php", true);
+	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xmlhttp.send("data="+data+"&elements="+elements);
   }
 
   startbutton.addEventListener('click', function(ev){

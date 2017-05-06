@@ -34,7 +34,7 @@ reconnect_from_cookie();
 			</div>
 		</div>
 
-	<?php $Data->get_message(); ?>
+		<?php $Data->get_message(); ?>
 
 <div class="container">
 		<form action="" method="post">

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 /*********************************************
 * Include_once
 */
@@ -169,8 +171,8 @@ if (isset($_POST['like']) && isset($_GET['id']) && isset($_GET['post']))
 		}
 		if ($find_post->username && $exit == 0)
 		{
-			$fields = ['username' => $find_post->username];
-			$add_like = $Database->request("UPDATE posts SET likes = likes + 1 WHERE username = :username", $fields);
+			$fields = ['id' => $find_post->id];
+			$add_like = $Database->request("UPDATE posts SET likes = likes + 1 WHERE id = :id", $fields);
 			$liked = "/" . $find_post->id;
 			$add_liked = $Database->request("UPDATE users SET liked = CONCAT(liked, '$liked') WHERE id = :id", $fields_id);
 			header('location: index.php?page=1');
