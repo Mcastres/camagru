@@ -2,7 +2,7 @@
 
 
 /**
-* Class permettant l'affichage de la Navbar
+* Class permettant l'affichage des messages d'erreur
 */
 class Data
 {
@@ -13,10 +13,10 @@ class Data
     {
         if (isset($_SESSION['flash'])):
             foreach ($_SESSION['flash'] as $type => $message): ?>
-                <!-- <div class="uk-alert-<?= $type; ?>" id="message" uk-alert> -->
-                    <!-- <a class="uk-alert-close" style="color: black;" uk-close></a> -->
+                <div class="alert-<?= $type; ?>">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     <p><?= $message; ?></p>
-                <!-- </div> -->
+                </div>
       <?php endforeach;
          unset($_SESSION['flash']);
         endif;

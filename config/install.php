@@ -19,7 +19,8 @@ $users = "CREATE TABLE IF NOT EXISTS `users`
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `email` varchar(255) NOT NULL,
 			  `username` varchar(255) NOT NULL,
-			  `password` varchar(255) NOT NULL,
+				`password` varchar(255) NOT NULL,
+				`liked` text,
 			  `creation_date` DATE NOT NULL,
 			  `confirm_date` DATE,
 			  `token` varchar(255) DEFAULT NULL,
@@ -42,7 +43,7 @@ $posts = "CREATE TABLE IF NOT EXISTS `posts`
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `username` varchar(255) NOT NULL,
 			  `likes` integer DEFAULT 0,
-			  `comments` text,
+			  `comments` text DEFAULT "",
 			  `image_path` varchar(255),
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;";

@@ -17,7 +17,7 @@ if (isset($_POST['submit']) && isset($_POST['comment']) && isset($_GET['id']) &&
 	$comment = htmlspecialchars(trim($_POST['comment']));
 
 	$fields = ['id' => $post];
-	$find_post = $Database->request("SELECT username FROM posts WHERE id = :id", $fields);
+	$find_post = $Database->request("SELECT id, username FROM posts WHERE id = :id", $fields);
 
 	$fields = ['username' => $find_post->username];
 	$find_user = $Database->request("SELECT email FROM users WHERE username = :username", $fields);
@@ -30,8 +30,8 @@ if (isset($_POST['submit']) && isset($_POST['comment']) && isset($_GET['id']) &&
 
 	if ($find_id->username && $find_post->username)
 	{
-		$fields = ['username' => $find_post->username];
-		$add_comment = $Database->request("UPDATE posts SET comments = CONCAT(comments, '$formated') WHERE username = :username", $fields);
+		$fields = ['id' => $find_post->id];
+		$add_comment = $Database->request("UPDATE posts SET comments = CONCAT(comments, '$formated') WHERE id = :id", $fields);
 		$to  =  $find_user->email;
 				 $subject = 'New comment ! - Camagru';
 				 $header  = "MIME-Version: 1.0\r\n";
@@ -147,32 +147,38 @@ else
 
 if (isset($_POST['like']) && isset($_GET['id']) && isset($_GET['post']))
 {
-	$id = htmlspecialchars(trim($_GET['id']));
-	$post = htmlspecialchars(trim($_GET['post']));
-
-	$fields = ['id' => $post];
-	$find_post = $Database->request("SELECT username, id FROM posts WHERE id = :id", $fields);
-
-	$fields_id = ['id' => $id];
-	$find_id = $Database->request("SELECT username, liked FROM users WHERE id = :id", $fields_id);
-
-	$exploded = explode("/", $find_id->liked);
-	$exit = 0;
-	foreach ($exploded as $key => $value)
-	{
-		if ($value == $post)
-			$exit = 1;
-	}
-	if ($find_post->username && $exit == 0)
-	{
-		$fields = ['username' => $find_post->username];
-		$add_like = $Database->request("UPDATE posts SET likes = likes + 1 WHERE username = :username", $fields);
-		$liked = "/" . $find_post->id;
-		$add_liked = $Database->request("UPDATE users SET liked = CONCAT(liked, '$liked') WHERE id = :id", $fields_id);
-		header('location: index.php?page=1');
-	}
+	if (!isset($_SESSION['auth']))
+		header('location: signin.php');
 	else
-		header('location: index.php?page=1');
+	{
+		$id = htmlspecialchars(trim($_GET['id']));
+		$post = htmlspecialchars(trim($_GET['post']));
+
+		$fields = ['id' => $post];
+		$find_post = $Database->request("SELECT username, id FROM posts WHERE id = :id", $fields);
+
+		$fields_id = ['id' => $id];
+		$find_id = $Database->request("SELECT username, liked FROM users WHERE id = :id", $fields_id);
+
+		$exploded = explode("/", $find_id->liked);
+		$exit = 0;
+		foreach ($exploded as $key => $value)
+		{
+			if ($value == $post)
+				$exit = 1;
+		}
+		if ($find_post->username && $exit == 0)
+		{
+			$fields = ['username' => $find_post->username];
+			$add_like = $Database->request("UPDATE posts SET likes = likes + 1 WHERE username = :username", $fields);
+			$liked = "/" . $find_post->id;
+			$add_liked = $Database->request("UPDATE users SET liked = CONCAT(liked, '$liked') WHERE id = :id", $fields_id);
+			header('location: index.php?page=1');
+		}
+		else
+			header('location: index.php?page=1');
+		}
 }
+
 
 ?>

@@ -29,51 +29,63 @@ else
     $currentPage = 1;
 $start = ($currentPage - 1) * $perPage;
 
+$fields = ['' => ''];
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<title>Camagru - Home</title>
+		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<?php if ($_SESSION['auth']): ?>
-			<a href="profile.php">Mon profil</a>
-			<a href="logout.php">Se deconnecter</a>
-		<?php else: ?>
-			<a href="signin.php">Se connecter</a>
-			<a href="signup.php">S'inscrire</a>
-		<?php endif; ?>
+		<div class="header">
+			<h1>Camagru</h1>
+			<div class="nav">
+				<?php if (isset($_SESSION['auth'])): ?>
+					<a href="profile.php" class="button button4">Mon profil</a>
+					<a href="logout.php" class="button button4">Se deconnecter</a>
+				<?php else: ?>
+					<a href="signin.php" class="button button4">Se connecter</a>
+					<a href="signup.php" class="button button4">S'inscrire</a>
+				<?php endif; ?>
+			</div>
+		</div>
+
+<div class="container">
+	<div class="row">
 		<?php $reqPosts = $Database->request("SELECT * FROM posts ORDER BY id DESC LIMIT $start, $perPage", $fields, true); ?>
 		<?php foreach ($reqPosts as $post): ?>
-			<div class="">
-				<img src="<?php echo $post->image_path; ?>" alt="" height="100" width="100">
-				<p><?php echo "@".$post->username; ?></p>
-				<ul>
+			<div class="col-3 posts">
+				<img src="<?php echo $post->image_path; ?>" alt="" height="290" width="290">
+				<p><?php echo "posted by @".$post->username; ?></p>
+				<hr>
 					<?php formate_comment($post->comments) ?>
-				</ul>
-				<form action="comments.php?post=<?php echo $post->id; ?>&id=<?php echo $_SESSION['auth']['id']; ?>" method="post">
-					<input type="text" name="comment" value="">
+				<form action="comments.php?post=<?php echo $post->id; ?>&id=<?php if (isset($_SESSION['auth'])){echo $_SESSION['auth']['id'];} ?>" method="post">
+					<input type="text" name="comment" value="" placeholder="Mon commentaire">
 					<br/>
-					<input type="submit" name="submit" value="Leave comment">
-					<input type="submit" name="like" value="Like <?php echo $post->likes; ?>">
+					<input type="submit" name="submit" value="Commenter">
+					<input type="submit" name="like" value="J'aimes <?php echo $post->likes; ?>">
 				</form>
 			</div>
-			<br>
 		<?php endforeach; ?>
+			</div>
 
-		<!-- Pagination -->
-        <div id="pagination">
-			<?php for($i = 1; $i <= $pagesNumber ; $i++): ?>
-            <?php if($i == $currentPage)
-            		echo $i.' ';
-             	  elseif ($i == $currentPage + 1)
-                	echo '<a href="index.php?page='.$i.'" class="next">'.$i.'</a> ';
-             	  else
-                	echo '<a href="index.php?page='.$i.'">'.$i.'</a> ';
-     		?>
-			<?php endfor; ?>
+        <div class="pagination">
+					<?php for($i = 1; $i <= $pagesNumber ; $i++): ?>
+		            <?php if($i == $currentPage)
+	            		echo $i.' ';
+	             	  elseif ($i == $currentPage + 1)
+	                	echo '<a href="index.php?page='.$i.'" class="next">'.$i.'</a> ';
+	             	  else
+	                	echo '<a href="index.php?page='.$i.'">'.$i.'</a> ';
+		     		?>
+					<?php endfor; ?>
         </div>
+		</div>
 
+		<div class="footer">
+		  <p>Jolie footer.</p>
+		</div>
 	</body>
 </html>

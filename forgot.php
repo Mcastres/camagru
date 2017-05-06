@@ -242,35 +242,52 @@ if (isset($_POST['change_submit']))
 	<head>
 		<meta charset="utf-8">
 		<title>Camagru - :(</title>
+    <link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<?php $Data->get_message(); ?>
+    <div class="header">
+			<h1>Camagru</h1>
+			<div class="nav">
+				<a href="index.php?page=1" class="button button4">Home</a>
+			</div>
+		</div>
+    <?php $Data->get_message(); ?>
 		<?php if ($section == "code"): ?>
-			<form method="post" action="">
-                <span class="uk-label">Un email vous a ete transmis</span>
-                <input type="text" name="verif_code" placeholder="Verification code">
-                <input type="submit" name="verif_submit" value="Submit">
-            </form>
+      <div class="container">
+  			<form method="post" action="">
+            <span class="uk-label">Un email vous a ete transmis</span>
+            <input type="text" name="verif_code" placeholder="Verification code">
+            <input type="submit" name="verif_submit" value="Submit">
+        </form>
+      </div>
 		<?php endif; ?>
 		<?php if ($section == "changemdp"): ?>
-			<form method="post" action="">
-                <span class="uk-label">Ne l'oubliez pas cette fois :)</span>
-				<br/>
-                <input type="password" name="newpassword" placeholder="New password">
-				<br/>
-                <input type="password" name="confirmpassword" placeholder="Confirmation">
-				<br/>
-            	<input type="submit" name="change_submit" value="Save">
-            </form>
+      <div class="container">
+    		<form method="post" action="">
+            <span class="uk-label">Ne l'oubliez pas cette fois :)</span>
+    			<br/>
+            <input type="password" name="newpassword" placeholder="New password">
+    			<br/>
+            <input type="password" name="confirmpassword" placeholder="Confirmation">
+    			<br/>
+        	<input type="submit" name="change_submit" value="Save">
+        </form>
+      </div>
 		<?php endif; ?>
 		<?php if ($section == ""): ?>
-		<form method="post" action="">
-		   	<span>Entrer votre adresse email</span>
-			<br/>
-			<input type="email" name="recup_mail" placeholder="Email">
-			<br/>
-			<input type="submit" name="recup_submit" value="Submit">
-	   </form>
+    <div class="container">
+      <h1>On a mauvaise memoire ?</h1>
+  		<form method="post" action="">
+  		   	<span>Entrer votre adresse email</span>
+  			<br/>
+  			<input type="email" name="recup_mail" placeholder="Email">
+  			<br/>
+  			<input type="submit" name="recup_submit" value="Submit">
+  	   </form>
+     </div>
    	   <?php endif; ?>
+       <div class="footer">
+         <p>blablabla.</p>
+       </div>
 	</body>
 </html>
