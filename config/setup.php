@@ -4,15 +4,26 @@
 * Require
 */
 include_once('../Class/class.bdd.php');
+include("database.php");
 
 /*********************************************
 * Class
 */
 $Database = Database::get_Instance();
 
-$init = "CREATE DATABASE IF NOT EXISTS camagru";
+try
+{
+	$bdd = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 
-$Database->request($init);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "CREATE DATABASE IF NOT EXISTS camagru";
+    $bdd->exec($sql);
+}
+catch(PDOException $e)
+{
+    echo $sql . "<br>" . $e->getMessage();
+}
+$bdd = null;
 
 $users = "CREATE TABLE IF NOT EXISTS `users`
 			(
@@ -43,7 +54,7 @@ $posts = "CREATE TABLE IF NOT EXISTS `posts`
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `username` varchar(255) NOT NULL,
 			  `likes` integer DEFAULT 0,
-			  `comments` text DEFAULT "",
+			  `comments` text,
 			  `image_path` varchar(255),
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;";

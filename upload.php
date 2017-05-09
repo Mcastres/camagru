@@ -15,7 +15,7 @@ $Database = Database::get_Instance();
 
 if (isset($_POST['data']) && $_POST['elements'])
 {
-	header('Content-type: image/png');
+	// header('Content-type: image/png');
 	$img = $_POST['data'];
 	$img = str_replace('data:image/jpeg;base64,', '', $img);
 	$img = str_replace(' ', '+', $img);
@@ -64,11 +64,12 @@ if (isset($_POST['data']) && $_POST['elements'])
 	if (!glob("public/pictures/".$_SESSION['auth']['id']."/*jpeg"))
 		rmdir("public/pictures/".$_SESSION['auth']['id']."");
 }
-$taillemax = 2097152;
 
 /* Si on recoit qqch... */
 if (isset($_FILES['image']) AND (isset($_POST['submit'])) AND !empty($_FILES['image']['name']))
 {
+	$taillemax = 2097152;
+
     /* Si la taille du fichier est correct */
     if ($_FILES['image']['size'] <= $taillemax) {
 
@@ -115,9 +116,6 @@ if (isset($_FILES['image']) AND (isset($_POST['submit'])) AND !empty($_FILES['im
 
             /* Ce qui donne "chemin d'acces + id.extension" */
             $dest_fichier = "public/pictures/".$_SESSION['auth']['id']."/".$formated.".".$extension_fichier."";
-
-            /* On dort */
-            sleep(2);
 
             /* On renomme le fichier avec son extension et on l'enregistre */
             $var = move_uploaded_file($_FILES['image']['tmp_name'], $dest_fichier);

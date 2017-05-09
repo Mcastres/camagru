@@ -57,6 +57,6 @@ if (isset($_GET['id']) && isset($_GET['code']))
              $_SESSION['flash']['danger'] = "Votre compte est deja active";
              header('location:signin.php');
         }
-}else echo "Error 404";
+}else header('location: index.php?page=1');
 
 ?>

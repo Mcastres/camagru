@@ -51,7 +51,7 @@ navigator.getMedia(
     canvas.getContext('2d').drawImage(video, 0, 0, width, height);
     var data = canvas.toDataURL('image/jpeg');
 	var elements = radio;
-    photo.setAttribute('src', data);
+    photo.setAttribute('src', radio);
 	var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "http://localhost:8080/camagru/upload.php", true);
 	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -60,6 +60,9 @@ navigator.getMedia(
 
   startbutton.addEventListener('click', function(ev){
       takepicture();
+	  setTimeout(function(){
+		   window.location.reload(1);
+		}, 1000);
     ev.preventDefault();
   }, false);
 
