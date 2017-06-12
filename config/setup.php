@@ -3,13 +3,7 @@
 /*********************************************
 * Require
 */
-include_once('../Class/class.bdd.php');
 include("database.php");
-
-/*********************************************
-* Class
-*/
-$Database = Database::get_Instance();
 
 try
 {
@@ -25,13 +19,17 @@ catch(PDOException $e)
 }
 $bdd = null;
 
+include_once('../Class/class.bdd.php');
+
+$Database = Database::get_Instance();
+
 $users = "CREATE TABLE IF NOT EXISTS `users`
 			(
 			  `id` int(11) NOT NULL AUTO_INCREMENT,
 			  `email` varchar(255) NOT NULL,
 			  `username` varchar(255) NOT NULL,
 			  `password` varchar(255) NOT NULL,
-			  `liked` text,
+			  `liked` varchar(255) DEFAULT '\\0',
 			  `creation_date` DATE NOT NULL,
 			  `confirm_date` DATE,
 			  `token` varchar(255) DEFAULT NULL,
@@ -59,12 +57,13 @@ $posts = "CREATE TABLE IF NOT EXISTS `posts`
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 
-if (file_exists("../public/pictures"));
+if (!file_exists("../public/pictures"))
 	mkdir("../public/pictures", 0777, true);
 
 $Database->request($users);
 $Database->request($recup);
 $Database->request($posts);
 
+echo "Database installed :)";
 
 ?>

@@ -39,111 +39,114 @@ if (isset($_POST['submit']) && isset($_POST['comment']) && isset($_GET['id']) &&
 		{
 			$fields = ['id' => $find_post->id];
 			$add_comment = $Database->request("UPDATE posts SET comments = CONCAT(comments, '$formated') WHERE id = :id", $fields);
-			$to  =  $find_user->email;
-					 $subject = 'New comment ! - Camagru';
-					 $header  = "MIME-Version: 1.0\r\n";
-					 $header .= 'From:"Camagru"<support@twelveforstudy.com>'."\n";
-					 $header .= 'Content-Type:text/html; charset="UTF-8"'."\n";
-					 $header .= 'Content-Transfer-Encoding: 8bit';
-					 $message = '
-					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-					<html xmlns:v="urn:schemas-microsoft-com:vml">
+			if ($find_id->username == $find_post->username)
+			{
+				$to  =  $find_user->email;
+						 $subject = 'New comment ! - Camagru';
+						 $header  = "MIME-Version: 1.0\r\n";
+						 $header .= 'From:"Camagru"<support@twelveforstudy.com>'."\n";
+						 $header .= 'Content-Type:text/html; charset="UTF-8"'."\n";
+						 $header .= 'Content-Transfer-Encoding: 8bit';
+						 $message = '
+						<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+						<html xmlns:v="urn:schemas-microsoft-com:vml">
 
-					<head>
-						<meta http-equiv="content-type" content="text/html; charset=utf-8">
-						<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
-						<link href="https://fonts.googleapis.com/css?family=Questrial"  rel="stylesheet" type="text/css">
+						<head>
+							<meta http-equiv="content-type" content="text/html; charset=utf-8">
+							<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+							<link href="https://fonts.googleapis.com/css?family=Questrial"  rel="stylesheet" type="text/css">
 
-					</head>
-					<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-						<div style="background-color:#34495e;">
-						  <!--[if gte mso 9]>
-						  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-							<v:fill type="tile" src="" color="#34495e"/>
-						  </v:background>
-						  <![endif]-->
-						  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-						  <tbody>
-							<tr>
-							  <td valign="top" align="left" background="">
-								<div>
-									 <table align="center" width="590" cellpadding="0" cellspacing="0" border="0">
-										<tbody>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
-											<tr>
-												<td style="text-align: center;">
-													<a href="http://localhost:8080/camagru/index.php">
-														<img src="https://s-media-cache-ak0.pinimg.com/originals/08/b0/01/08b0010d557f4e4b87fe26205dac8911.png" width="160" border="0" >
-													</a>
-												</td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
-											<tr>
-												<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; font-size: 40px; color: #87b885; mso-line-height-rule: exactly;  line-height: 28px;">
-													Hey '.$find_post->username.'
-												</td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
-											<tr>
-												<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; color: #95a5a6; mso-line-height-rule: exactly;  line-height: 28px;">
-													'.$find_id->username.' just commented your post, he says: '.$comment.'
-												</td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
-											<tr>
-												<td align="center">
-													<table align="center" width="240" >
-														<tbody>
-															<tr>
+						</head>
+						<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+							<div style="background-color:#34495e;">
+							  <!--[if gte mso 9]>
+							  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+								<v:fill type="tile" src="" color="#34495e"/>
+							  </v:background>
+							  <![endif]-->
+							  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+							  <tbody>
+								<tr>
+								  <td valign="top" align="left" background="">
+									<div>
+										 <table align="center" width="590" cellpadding="0" cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
+												<tr>
+													<td style="text-align: center;">
+														<a href="http://localhost:8080/camagru/index.php">
+															<img src="https://s-media-cache-ak0.pinimg.com/originals/08/b0/01/08b0010d557f4e4b87fe26205dac8911.png" width="160" border="0" >
+														</a>
+													</td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
+												<tr>
+													<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; font-size: 40px; color: #87b885; mso-line-height-rule: exactly;  line-height: 28px;">
+														Hey '.$find_post->username.'
+													</td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
+												<tr>
+													<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; color: #95a5a6; mso-line-height-rule: exactly;  line-height: 28px;">
+														'.$find_id->username.' just commented your post, he says: '.$comment.'
+													</td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
+												<tr>
+													<td align="center">
+														<table align="center" width="240" >
+															<tbody>
+																<tr>
 
-																<td align="center" height="60" bgcolor="#87b885" style="font-family: Questrial, Helvetica, sans-serif; font-size: 18px; color: #FFF; vertical-align: middle; text-align: center;">
-																	<a href="http://localhost:8080/camagru/single.php?id='.$find_post->id.'" style="font-family: Questrial, Helvetica, sans-serif; font-size: 18px; color: #FFF; vertical-align: middle; text-align: center; text-decoration: none; line-height: 60px; display: block; height: 60px; ">My post</a>
-																</td>
+																	<td align="center" height="60" bgcolor="#87b885" style="font-family: Questrial, Helvetica, sans-serif; font-size: 18px; color: #FFF; vertical-align: middle; text-align: center;">
+																		<a href="http://localhost:8080/camagru/single.php?id='.$find_post->id.'" style="font-family: Questrial, Helvetica, sans-serif; font-size: 18px; color: #FFF; vertical-align: middle; text-align: center; text-decoration: none; line-height: 60px; display: block; height: 60px; ">My post</a>
+																	</td>
 
-															</tr>
-														</tbody>
-													</table>
-												</td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
 
-											<tr>
-												<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; color: #95a5a6; mso-line-height-rule: exactly;  line-height: 28px;">
-													Have a good day
-												</td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
-											<tr>
-												<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
-											</tr>
+												<tr>
+													<td align="center" style="font-family: Questrial, Helvetica, sans-serif;  text-align: center; color: #95a5a6; mso-line-height-rule: exactly;  line-height: 28px;">
+														Have a good day
+													</td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
+												<tr>
+													<td height="30" style="font-size: 30px; line-height: 30px;"> &nbsp; </td>
+												</tr>
 
-										</tbody>
-									 </table>
-								</div>
-							  </td>
-							</tr>
-						   </tbody>
-						  </table>
-						</div>
-					</body>
-					</html>
+											</tbody>
+										 </table>
+									</div>
+								  </td>
+								</tr>
+							   </tbody>
+							  </table>
+							</div>
+						</body>
+						</html>
 
-					 ';
+						 ';
 
-					 /* Envoie du mail HTML */
-					 mail($to, $subject, $message, $header);
+						 /* Envoie du mail HTML */
+						 mail($to, $subject, $message, $header);
+				}
 			header('location: single.php?id='.$find_post->id.'');
 		}
 		else

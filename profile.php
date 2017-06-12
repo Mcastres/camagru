@@ -64,7 +64,7 @@ $elements = glob("public/models/*.png");
 					<input type="file" name="image" value="">
 					<br/>
 					<br/>
-					<input type="submit" name="submit" value="Uploader">
+					<input type="submit" name="submit" value="Uploader" id="upload" disabled="true">
 				</form>
 			</div>
 			<div class="col-3 menu">
@@ -93,6 +93,7 @@ $elements = glob("public/models/*.png");
 	function affiche_bouton(i)
 	{
 		document.getElementById("startbutton").disabled = false;
+		document.getElementById("upload").disabled = false;
 		document.getElementById(i).setAttribute("checked", "");
 		var radio = document.querySelector('input[name=elements]:checked').value;
 		document.getElementById('photo').setAttribute("src", radio);

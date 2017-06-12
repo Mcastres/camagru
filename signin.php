@@ -40,7 +40,7 @@ reconnect_from_cookie();
 		<form action="" method="post">
 			<h1>Formulaire de connexion a Camagru</h1>
 			<h3>Content de vous voir :)</h3>
-			<label>Email</label>
+			<label>Pseudo</label>
 			<input type="text" name="username" value="<?php if (isset($_POST['username'])){echo $_POST['username'];} ?>" placeholder="username">
 			</br>
 			<label>Mot de passe</label>
