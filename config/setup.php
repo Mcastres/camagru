@@ -60,6 +60,9 @@ $posts = "CREATE TABLE IF NOT EXISTS `posts`
 if (!file_exists("../public/pictures"))
 	mkdir("../public/pictures", 0777, true);
 
+if (!file_exists("../public/montage"))
+	mkdir("../public/montage", 0777, true);
+
 $Database->request($users);
 $Database->request($recup);
 $Database->request($posts);
